@@ -6,6 +6,8 @@
 package com.atacadao.almoxarifado.view;
 
 import com.atacadao.almoxarifado.entidade.Equipamento;
+import com.atacadao.almoxarifado.model.FormatandoDouble;
+import com.atacadao.almoxarifado.model.FormatosDeData;
 import com.atacadao.almoxarifado.persistencia.equipamentoConexao;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -50,9 +52,9 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txtTipo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        txtFrtValidade = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtValor = new javax.swing.JTextField();
+        txtValor = new javax.swing.JFormattedTextField();
+        txtFrtValidade = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -92,13 +94,21 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Valor");
 
+        txtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+
+        try {
+            txtFrtValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -108,28 +118,33 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(56, 56, 56))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtFrtValidade)
+                                .addGap(14, 14, 14)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFrtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel5))
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addContainerGap(265, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +268,7 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
             dtm.removeRow(0);
         }
         for (Equipamento equipamento : equipamentos) {
-            dtm.addRow(new String[] {equipamento.getPatrimonio(),equipamento.getNome(),String.valueOf(equipamento.getValidade())
+            dtm.addRow(new String[] {equipamento.getPatrimonio(),equipamento.getNome(),FormatosDeData.formatarLongParaDatas(equipamento.getValidade())
             ,equipamento.getSituacao(),equipamento.getCodigo(),equipamento.getTipo()});
         }
     }
@@ -261,10 +276,10 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         
         if (txtPatrimonio.getText() != "") {
-        Equipamento equipamento = new Equipamento(txtPatrimonio.getText(), txtNome.getText(), Long.valueOf(txtFrtValidade.getText()),
-                txtSituacao.getText(), txtCodigo.getText(), txtTipo.getText(), Double.valueOf(txtValor.getText()));
+        Equipamento equipamento = new Equipamento(txtPatrimonio.getText(), txtNome.getText(), FormatosDeData.formatarDatasParaLong(txtFrtValidade.getText()),
+                txtSituacao.getText(), txtCodigo.getText(), txtTipo.getText(),FormatandoDouble.FormatandoValores(txtValor.getText()));
         
-        dtm.addRow(new String[] {equipamento.getPatrimonio(),equipamento.getNome(),String.valueOf(equipamento.getValidade())
+        dtm.addRow(new String[] {equipamento.getPatrimonio(),equipamento.getNome(),FormatosDeData.formatarLongParaDatas(equipamento.getValidade())
             ,equipamento.getSituacao(),equipamento.getCodigo(),equipamento.getTipo(),String.valueOf(equipamento.getValor())});
         }
 
@@ -277,7 +292,7 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
             int i = 0;
             equipamentos.add(new Equipamento((String) jTable1.getValueAt(i, 0),
                     (String) jTable1.getValueAt(i, 1),
-                    Long.parseLong((String) jTable1.getValueAt(i, 2)),
+                    FormatosDeData.formatarDatasParaLong((String) jTable1.getValueAt(i, 2)),
                     (String) jTable1.getValueAt(i, 3),
                     (String) jTable1.getValueAt(i, 4),
                     (String) jTable1.getValueAt(i, 5),
@@ -321,11 +336,11 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbProgressBar;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtFrtValidade;
+    private javax.swing.JFormattedTextField txtFrtValidade;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPatrimonio;
     private javax.swing.JTextField txtSituacao;
     private javax.swing.JTextField txtTipo;
-    private javax.swing.JTextField txtValor;
+    private javax.swing.JFormattedTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

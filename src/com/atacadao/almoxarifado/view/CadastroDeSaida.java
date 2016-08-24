@@ -8,6 +8,8 @@ package com.atacadao.almoxarifado.view;
 import com.atacadao.almoxarifado.conectividade.Connections;
 import com.atacadao.almoxarifado.entidade.Equipamento;
 import com.atacadao.almoxarifado.entidade.Saida;
+import com.atacadao.almoxarifado.model.FormatandoDouble;
+import com.atacadao.almoxarifado.model.FormatosDeData;
 import com.atacadao.almoxarifado.persistencia.equipamentoConexao;
 import com.atacadao.almoxarifado.persistencia.saidaConexao;
 import java.sql.Connection;
@@ -52,8 +54,6 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jTConsulta = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtNota = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtSolicitante = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -99,19 +99,16 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         setToolTipText("Cadastro de Saídas");
 
         jTConsulta.setBackground(new java.awt.Color(255, 255, 255));
+        jTConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTConsultaMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da Nota de Saída"));
-
-        jLabel2.setText("Numero de Saida");
-
-        txtNota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNotaActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Solicitante");
 
@@ -124,16 +121,12 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel3)
+                    .addComponent(txtSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(59, 59, 59))
         );
         jPanel3Layout.setVerticalGroup(
@@ -141,12 +134,10 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -159,6 +150,12 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Validade");
 
+        try {
+            txtValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         jLabel7.setText("Código");
 
         jLabel8.setText("Tipo");
@@ -170,6 +167,8 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jLabel10.setText("Situação");
 
         jLabel11.setText("Valor");
+
+        txtFrtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         jButton2.setForeground(new java.awt.Color(0, 204, 204));
         jButton2.setText("Incluir");
@@ -222,10 +221,10 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(txtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(txtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addGap(19, 19, 19)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,6 +280,11 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
         jButton1.setForeground(new java.awt.Color(0, 204, 204));
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton3.setForeground(new java.awt.Color(0, 153, 204));
         jButton3.setText("Excluir");
@@ -457,15 +461,11 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
            System.out.println(equips);
            
            for (Equipamento equipam : equips) {
-               dtm.addRow(new String[] {equipam.getNome(),equipam.getPatrimonio(),String.valueOf(equipam.getValidade())
-               ,equipam.getCodigo(),equipam.getTipo(),equipam.getSituacao(),String.valueOf(equipam.getValor())});
+               dtm.addRow(new String[] {equipam.getNome(),equipam.getPatrimonio(),FormatosDeData.formatarLongParaDatas(equipam.getValidade()),
+               equipam.getCodigo(),equipam.getTipo(),equipam.getSituacao(),String.valueOf(equipam.getValor())});
            }
         
     }//GEN-LAST:event_jNomeConsultaActionPerformed
-
-    private void txtNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNotaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNotaActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         txtNome.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
@@ -474,15 +474,15 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         txtCodigo.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
         txtTipo.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
         txtSituacao.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 5));
-        txtFrtValor.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6));
+        txtFrtValor.setText(FormatandoDouble.DoubleParaString((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6)));
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
         ArrayList<Equipamento> equipamento = null;
         
-        equipamento = equipamentoConexao.consultar(new Equipamento(txtPatrimonio.getText(), txtNome.getText(), Long.valueOf(txtValidade.getText())
-                , txtSituacao.getText(), txtCodigo.getText(), txtTipo.getText(), Double.valueOf(txtFrtValor.getText())), (Integer) JSpinnerQtd.getValue());
+        equipamento = equipamentoConexao.consultar(new Equipamento(txtPatrimonio.getText(), txtNome.getText(), FormatosDeData.formatarDatasParaLong(txtValidade.getText())
+                , txtSituacao.getText(), txtCodigo.getText(), txtTipo.getText(), FormatandoDouble.FormatandoValores(txtFrtValor.getText())), (Integer) JSpinnerQtd.getValue());
         
         if (equipamento.size() < (Integer) JSpinnerQtd.getValue()) {
             JOptionPane.showMessageDialog(null, "Adicionado somente "+equipamento.size()+ " devido ao limite de estoque","Estoque Insuficiente",JOptionPane.ERROR_MESSAGE);
@@ -493,7 +493,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         }
         
          for (Equipamento equipam : equipamento) {
-               dtm.addRow(new String[] {equipam.getNome(),equipam.getPatrimonio(),String.valueOf(equipam.getValidade())
+               dtm.addRow(new String[] {equipam.getNome(),equipam.getPatrimonio(),FormatosDeData.formatarLongParaDatas(equipam.getValidade())
                ,equipam.getCodigo(),equipam.getTipo(),equipam.getSituacao(),String.valueOf(equipam.getValor())});
            }
         
@@ -508,6 +508,33 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
        saidaConexao.Deletar((String) jTable3.getValueAt(jTable3.getSelectedRow(), 0));
        carregarSaidas();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ArrayList<Equipamento> equipamentos2 = new ArrayList<>();
+        DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+        Integer i = 0;
+        
+        while (jTable2.getRowCount() - i > 0) {  
+            System.out.println(jTable2.getRowCount());
+            equipamentos2.add(new Equipamento((String) jTable2.getValueAt(0, 1)
+                    , (String) jTable2.getValueAt(0, 0)
+                    , FormatosDeData.formatarDatasParaLong((String) jTable2.getValueAt(i, 2))
+                    , (String) jTable2.getValueAt(0, 5)
+                    , (String) jTable2.getValueAt(0, 3)
+                    , (String) jTable2.getValueAt(0, 4)
+                    , FormatandoDouble.FormatandoValores((String) jTable2.getValueAt(i, 6))));
+            dtm.removeRow(0);
+        }
+        saidaConexao.cadastro(equipamentos2, txtSolicitante.getText(), txtResponsavel.getText());
+        for (Equipamento equipamento : equipamentos2) {
+            equipamentoConexao.deletar(equipamento.getPatrimonio());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTConsultaMouseClicked
+        limparEAtualizar(equipamentoConexao.buscarTodos());
+        carregarSaidas();
+    }//GEN-LAST:event_jTConsultaMouseClicked
     private void limparEAtualizar(ArrayList<Equipamento> equipamentos){
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
 
@@ -515,7 +542,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                dtm.removeRow(0);
            }
            for (Equipamento equipamento : equipamentos) {
-               dtm.addRow(new String[] {equipamento.getNome(),equipamento.getPatrimonio(),String.valueOf(equipamento.getValidade())
+               dtm.addRow(new String[] {equipamento.getNome(),equipamento.getPatrimonio(),FormatosDeData.formatarLongParaDatas(equipamento.getValidade())
                ,equipamento.getCodigo(),equipamento.getTipo(),equipamento.getSituacao(),String.valueOf(equipamento.getValor())});
            }
        }
@@ -537,7 +564,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
             for (Saida saida : saidas) {
                 dtm.addRow(new String[] {
                     saida.getRegistro(),saida.getSolicitador(),saida.getAutorizador(),saida.getPatrimonio(),
-                    saida.getNome(),String.valueOf(saida.getValidade()),saida.getSituacao(),saida.getCodigo(),
+                    saida.getNome(),FormatosDeData.formatarLongParaDatas(saida.getValidade()),saida.getSituacao(),saida.getCodigo(),
                     saida.getTipo(),String.valueOf(saida.getValor())
                 });
             }
@@ -555,7 +582,6 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -580,7 +606,6 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JFormattedTextField txtFrtValor;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtNota;
     private javax.swing.JTextField txtPatrimonio;
     private javax.swing.JTextField txtResponsavel;
     private javax.swing.JTextField txtSituacao;

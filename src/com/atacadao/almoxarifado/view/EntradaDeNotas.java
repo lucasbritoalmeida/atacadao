@@ -6,9 +6,14 @@
 package com.atacadao.almoxarifado.view;
 
 import com.atacadao.almoxarifado.entidade.Equipamento;
+import com.atacadao.almoxarifado.model.FormatandoDouble;
+import com.atacadao.almoxarifado.model.FormatosDeData;
 import com.atacadao.almoxarifado.persistencia.equipamentoConexao;
 import com.atacadao.almoxarifado.persistencia.registroConexao;
+import java.nio.charset.Charset;
+import java.text.Format;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -24,6 +29,7 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
      */
     public EntradaDeNotas() {
         initComponents();
+        
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         jTable1.setRowSorter(new TableRowSorter(modelo));
     }
@@ -77,6 +83,19 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Incluir Entradas"));
 
+        txtCusto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        txtCusto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCustoActionPerformed(evt);
+            }
+        });
+
+        try {
+            txtFrtDtCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         jLabel1.setText("Numero da Nota");
 
         jLabel2.setText("Fornecedor");
@@ -129,9 +148,15 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Nome");
 
+        try {
+            txtFrtValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         jLabel6.setText("Validade");
 
-        jLabel7.setText("C�digo");
+        jLabel7.setText("Codigo");
 
         spinnerQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
@@ -143,7 +168,9 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel9.setText("Situa��o");
+        jLabel9.setText("Situacao");
+
+        txtFrtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         jLabel10.setText("Valor");
 
@@ -240,7 +267,7 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nome", "Validade", "C�digo", "Tipo", "Situa��o", "Valor"
+                "Nome", "Validade", "Código", "Tipo", "Situação", "Valor"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -321,14 +348,11 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         ArrayList<Equipamento> equipamentos = new ArrayList<>();
         
         int quantidade = (int) spinnerQuantidade.getValue();
-        
+        Double valorUnitario = FormatandoDouble.FormatandoValores(txtFrtValor.getText()) / quantidade;
         for (int i = 0; i < quantidade ; i++) {
-            Equipamento equipamento = new Equipamento(txtNomeEquip.getText(), Long.valueOf(txtFrtValidade.getText()),
-                    txtSituacao.getText(), txtCodigo.getText(),txtTipo.getText(), Double.valueOf(txtFrtValor.getText()) / quantidade);
-            equipamentos.add(equipamento);
             
-            dtm.addRow(new String[] {equipamento.getNome(),String.valueOf(equipamento.getValidade())
-            ,equipamento.getCodigo(),equipamento.getTipo(),equipamento.getSituacao(),String.valueOf(equipamento.getValor())});
+            dtm.addRow(new String[] {txtNomeEquip.getText(),txtFrtValidade.getText()
+            ,txtCodigo.getText(),txtTipo.getText(),txtSituacao.getText(),String.valueOf(valorUnitario)});
         }
         
         
@@ -342,11 +366,11 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         while (dtm.getRowCount() > 0) {
             int i = 0;
             equipamentos.add(new Equipamento((String) jTable1.getValueAt(i, 0),
-                    Long.parseLong((String) jTable1.getValueAt(i, 1)),
+                    FormatosDeData.formatarDatasParaLong((String) jTable1.getValueAt(i, 1)),
                     (String) jTable1.getValueAt(i, 2),
                     (String) jTable1.getValueAt(i, 3),
                     (String) jTable1.getValueAt(i, 4),
-                    Double.valueOf((String) jTable1.getValueAt(i, 5))));
+                    FormatandoDouble.FormatandoValores((String) jTable1.getValueAt(i, 5))));
                     
                     dtm.removeRow(0);
                     i++;
@@ -367,6 +391,10 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         dtm.removeRow(jTable1.getSelectedRow());
         jTable1.clearSelection();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCustoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

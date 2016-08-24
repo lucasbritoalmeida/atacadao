@@ -6,6 +6,7 @@
 package com.atacadao.almoxarifado.view;
 
 import com.atacadao.almoxarifado.entidade.Equipamento;
+import com.atacadao.almoxarifado.model.FormatosDeData;
 import com.atacadao.almoxarifado.persistencia.equipamentoConexao;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -76,7 +77,11 @@ public class Estoques extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Validade");
 
-        txtFrtValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        try {
+            txtFrtValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel4.setText("Situação");
 
@@ -250,7 +255,7 @@ public class Estoques extends javax.swing.JInternalFrame {
         }
         ArrayList<Equipamento> equipamentos = equipamentoConexao.buscarTodos();
         for (Equipamento equipamento : equipamentos) {
-            dtm.addRow(new String[] {equipamento.getPatrimonio(),equipamento.getNome(),String.valueOf(equipamento.getValidade())
+            dtm.addRow(new String[] {equipamento.getPatrimonio(),equipamento.getNome(),FormatosDeData.formatarLongParaDatas(equipamento.getValidade())
             ,equipamento.getSituacao(),equipamento.getCodigo(),equipamento.getTipo(),String.valueOf(equipamento.getValor())});
         }
     }
@@ -292,7 +297,7 @@ public class Estoques extends javax.swing.JInternalFrame {
         if (!txtPatrimonio.getText().trim().equals("")) {
             System.out.println(txtPatrimonio.getText());
         equipamentoConexao.atualizar(new Equipamento(txtPatrimonio.getText(), txtNome.getText(),
-                Long.valueOf(txtFrtValidade.getText()), txtSituacao.getText(), txtCodigo.getText(), txtTipo.getText(), Double.valueOf(txtFrtValor.getText())));
+                Long.valueOf(FormatosDeData.formatarDatasParaLong(txtFrtValidade.getText())), txtSituacao.getText(), txtCodigo.getText(), txtTipo.getText(), Double.valueOf(txtFrtValor.getText())));
                 limparEAtualizar();
         }else{
             JOptionPane.showMessageDialog(null, "Favor informar o patrimonio do equipamento para atualizar",
