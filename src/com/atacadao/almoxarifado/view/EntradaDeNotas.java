@@ -61,13 +61,13 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         txtCodigo = new javax.swing.JTextField();
         spinnerQuantidade = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        txtSituacao = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtFrtValor = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         txtTipo = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        txtSituacao = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -162,12 +162,6 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Quantidade");
 
-        txtSituacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSituacaoActionPerformed(evt);
-            }
-        });
-
         jLabel9.setText("Situacao");
 
         txtFrtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
@@ -184,6 +178,8 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Tipo");
 
+        txtSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Excelente", "Boa", "Regular", "Ruim", "Em Manutenção" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -192,25 +188,24 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(106, 106, 106))
-                            .addComponent(txtNomeEquip))
-                        .addGap(5, 5, 5)
+                            .addComponent(jLabel5)
+                            .addComponent(txtNomeEquip, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(txtFrtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtFrtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(102, 102, 102))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtSituacao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(jLabel9)
+                            .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(txtFrtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtFrtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -218,18 +213,11 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
                         .addGap(115, 115, 115)
                         .addComponent(jLabel8))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtTipo)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(spinnerQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel11))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(spinnerQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,10 +241,10 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFrtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
-                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -338,10 +326,6 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSituacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSituacaoActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
@@ -352,7 +336,7 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         for (int i = 0; i < quantidade ; i++) {
             
             dtm.addRow(new String[] {txtNomeEquip.getText(),txtFrtValidade.getText()
-            ,txtCodigo.getText(),txtTipo.getText(),txtSituacao.getText(),String.valueOf(valorUnitario)});
+            ,txtCodigo.getText(),txtTipo.getText(),String.valueOf(txtSituacao.getSelectedItem()).toUpperCase(),String.valueOf(valorUnitario)});
         }
         
         
@@ -370,7 +354,7 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
                     (String) jTable1.getValueAt(i, 2),
                     (String) jTable1.getValueAt(i, 3),
                     (String) jTable1.getValueAt(i, 4),
-                    FormatandoDouble.FormatandoValores((String) jTable1.getValueAt(i, 5))));
+                    Double.valueOf((String) jTable1.getValueAt(i, 5))));
                     
                     dtm.removeRow(0);
                     i++;
@@ -378,7 +362,7 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         
         if (!equipamentos.isEmpty() & !txtNumeroNota.getText().trim().equals("")) {
             equipamentoConexao.CasdastrarVarios(equipamentos);
-            registroConexao.Cadastrar(txtNumeroNota.getText(), equipamentos);
+            registroConexao.Cadastrar(txtNumeroNota.getText(),txtFornecedor.getText(),FormatandoDouble.FormatandoValores(txtCusto.getText()), equipamentos);
         }else if( txtNumeroNota.getText().trim().equals("")){
             JOptionPane.showMessageDialog(null, "Favor informar numero de nota");
         }else if(equipamentos.isEmpty()){
@@ -426,7 +410,7 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtFrtValor;
     private javax.swing.JTextField txtNomeEquip;
     private javax.swing.JTextField txtNumeroNota;
-    private javax.swing.JTextField txtSituacao;
+    private javax.swing.JComboBox<String> txtSituacao;
     private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 }

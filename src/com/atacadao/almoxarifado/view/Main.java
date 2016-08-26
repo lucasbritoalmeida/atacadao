@@ -35,6 +35,7 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
+        jSeparator2 = new javax.swing.JSeparator();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
@@ -46,7 +47,10 @@ public class Main extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
@@ -125,6 +129,7 @@ public class Main extends javax.swing.JFrame {
         jMenu5.add(jMenuItem3);
 
         jMenu4.add(jMenu5);
+        jMenu4.add(jSeparator1);
 
         jMenuItem5.setText("Entrada de Notas");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +138,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem5);
+        jMenu4.add(jSeparator3);
+
+        jMenuItem8.setText("Consulta de Entradas");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem8);
 
         jMenuItem7.setText("Saida de Notas");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -231,6 +245,12 @@ public class Main extends javax.swing.JFrame {
         saida.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+       ConsultaDeEntradas cde = new ConsultaDeEntradas();
+       jDesktopPane1.add(cde);
+       cde.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -282,5 +302,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     // End of variables declaration//GEN-END:variables
 }

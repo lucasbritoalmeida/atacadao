@@ -8,6 +8,7 @@ package com.atacadao.almoxarifado.persistencia;
 import com.atacadao.almoxarifado.conectividade.Connections;
 import com.atacadao.almoxarifado.entidade.Equipamento;
 import com.atacadao.almoxarifado.entidade.Saida;
+import com.atacadao.almoxarifado.model.FormatosDeData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,7 +65,7 @@ public class saidaConexao {
                 prepare = conn.prepareStatement(sql);
                 
                 prepare.setString(1, equipamento.getNome());
-                prepare.setString(2, String.valueOf(equipamento.getValidade()));
+                prepare.setString(2, FormatosDeData.formatarLongParaDatas(equipamento.getValidade()));
                 prepare.setString(3, equipamento.getSituacao());
                 prepare.setString(4, equipamento.getCodigo());
                 prepare.setString(5, equipamento.getTipo());
@@ -143,7 +144,7 @@ public class saidaConexao {
             
             while (result.next()) {                
                 saidas.add(new Saida(result.getString("numerosaida"),result.getString("solicitante"),result.getString("autorizado")
-                ,result.getString("patrimonio"),result.getString("nome"),Long.valueOf(result.getString("validade")),result.getString("situacao"),
+                ,result.getString("patrimonio"),result.getString("nome"),FormatosDeData.formatarDatasParaLong((result.getString("validade"))),result.getString("situacao"),
                 result.getString("codigo"),result.getString("tipo"),result.getDouble("valor")));
             }
             

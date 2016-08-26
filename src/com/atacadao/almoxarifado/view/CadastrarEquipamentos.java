@@ -46,7 +46,6 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
         txtPatrimonio = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtSituacao = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -55,6 +54,7 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txtValor = new javax.swing.JFormattedTextField();
         txtFrtValidade = new javax.swing.JFormattedTextField();
+        txtSituacao = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -102,6 +102,8 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
 
+        txtSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Excelente", "Boa", "Regular", "Ruim", "Em manutenção" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -116,9 +118,9 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
                             .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(14, 14, 14)
+                            .addComponent(jLabel4)
+                            .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,9 +170,9 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 22, Short.MAX_VALUE))
         );
 
@@ -275,12 +277,14 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         
-        if (txtPatrimonio.getText() != "") {
-        Equipamento equipamento = new Equipamento(txtPatrimonio.getText(), txtNome.getText(), FormatosDeData.formatarDatasParaLong(txtFrtValidade.getText()),
-                txtSituacao.getText(), txtCodigo.getText(), txtTipo.getText(),FormatandoDouble.FormatandoValores(txtValor.getText()));
-        
-        dtm.addRow(new String[] {equipamento.getPatrimonio(),equipamento.getNome(),FormatosDeData.formatarLongParaDatas(equipamento.getValidade())
-            ,equipamento.getSituacao(),equipamento.getCodigo(),equipamento.getTipo(),String.valueOf(equipamento.getValor())});
+        if (txtPatrimonio.getText() != "") {        
+        dtm.addRow(new String[] {txtNome.getText().toUpperCase()
+                    ,txtPatrimonio.getText().toUpperCase()
+                    ,txtFrtValidade.getText()
+                    ,txtCodigo.getText()
+                    ,txtTipo.getText()
+                    ,String.valueOf(txtSituacao.getSelectedItem()).toUpperCase()
+                    ,FormatandoDouble.FormatandoValoresString(txtValor.getText())}); 
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -339,7 +343,7 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtFrtValidade;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPatrimonio;
-    private javax.swing.JTextField txtSituacao;
+    private javax.swing.JComboBox<String> txtSituacao;
     private javax.swing.JTextField txtTipo;
     private javax.swing.JFormattedTextField txtValor;
     // End of variables declaration//GEN-END:variables

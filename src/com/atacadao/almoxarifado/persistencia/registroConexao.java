@@ -7,8 +7,10 @@ package com.atacadao.almoxarifado.persistencia;
 
 import com.atacadao.almoxarifado.conectividade.Connections;
 import com.atacadao.almoxarifado.entidade.Equipamento;
+import com.atacadao.almoxarifado.entidade.equipReg;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -20,11 +22,11 @@ import java.util.logging.Logger;
  */
 public class registroConexao {
 
-public static void Cadastrar(String nota, ArrayList<Equipamento> equipamentos){
+public static void Cadastrar(String nota, String fornecedor, Double custos,ArrayList<Equipamento> equipamentos){
     Connection conn = Connections.getConnection();
     
-    String sql = "insert into registro (nota,nomeequipamento,validade,codigoequip,tipoequip,situequip,valorequip)"
-            + "values(?,?,?,?,?,?,?);";
+    String sql = "insert into registro (nota,fornecedor,custo,nomeequipamento,validade,codigoequip,tipoequip,situequip,valorequip)"
+            + "values(?,?,?,?,?,?,?,?,?);";
     
     PreparedStatement prepare = null;
     
@@ -33,12 +35,14 @@ public static void Cadastrar(String nota, ArrayList<Equipamento> equipamentos){
     try {
         prepare = conn.prepareStatement(sql);
         prepare.setString(1, nota);
-        prepare.setString(2, equipamento.getNome());
-        prepare.setString(3, String.valueOf(equipamento.getValidade()));
-        prepare.setString(4, equipamento.getCodigo());
-        prepare.setString(5, equipamento.getTipo());
-        prepare.setString(6, equipamento.getSituacao());
-        prepare.setDouble(7, Double.valueOf(equipamento.getValor()));
+        prepare.setString(2, fornecedor);
+        prepare.setDouble(3, custos);
+        prepare.setString(4, equipamento.getNome());
+        prepare.setString(5, String.valueOf(equipamento.getValidade()));
+        prepare.setString(6, equipamento.getCodigo());
+        prepare.setString(7, equipamento.getTipo());
+        prepare.setString(8, equipamento.getSituacao());
+        prepare.setDouble(9, Double.valueOf(equipamento.getValor()));
         
         prepare.execute();
     } catch (SQLException ex) {
@@ -56,5 +60,40 @@ public static void Cadastrar(String nota, ArrayList<Equipamento> equipamentos){
         }
  
 }
+
+public static ArrayList<equipReg> buscarTodos(String nota){
+    Connection conn = Connections.getConnection();
+    String sql = "select * from registro where nota like ?";
+    
+    ArrayList<equipReg> registros = new ArrayList<>();
+    
+    PreparedStatement prepare = null;
+    
+    try {
+        prepare = conn.prepareCall(sql);
+        prepare.setString(1, nota);
+        ResultSet result = prepare.executeQuery();
+        
+        while (result.next()) {            
+            registros.add(new equipReg(result.getString("nota"), result.getString("nomeequipamento"),
+                    result.getString("validade"),result.getString("codigoequip") , result.getString("tipoequip")
+                    ,result.getString("situequip"), result.getDouble("valorequip"), result.getString("fornecedor")
+                    , result.getDouble("custo")));
+        }
+        if (registros.isEmpty()) {
+            conn.close();
+            prepare.close();
+            return null;
+        }else{
+            conn.close();
+            prepare.close();
+            return registros;
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(registroConexao.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null;
+}
+
     
 }

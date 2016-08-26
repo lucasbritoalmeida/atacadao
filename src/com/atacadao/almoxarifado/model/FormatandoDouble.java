@@ -15,7 +15,6 @@ public class FormatandoDouble {
         String replaceAll = doubles.replace(".", "");
         String replace = replaceAll.replace(",", ".");
         Double valor = Double.valueOf(replace);
-        System.out.println(valor);
         return valor;
     }
     public static String FormatandoValoresString(String doubles){
@@ -30,6 +29,6 @@ public class FormatandoDouble {
     }
     
     public static void main(String[] args) {
-        FormatandoValores("1.251.254,34");
+        System.out.println(FormatandoValoresString("1.251.254,34"));
     }
 }

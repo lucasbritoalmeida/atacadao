@@ -70,12 +70,12 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         txtPatrimonio = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtSituacao = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtFrtValor = new javax.swing.JFormattedTextField();
         jButton2 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         JSpinnerQtd = new javax.swing.JSpinner();
+        txtSituacao = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -182,6 +182,8 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
         JSpinnerQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
+        txtSituacao.setEditable(false);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -198,8 +200,8 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                                 .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel10)
+                            .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
@@ -217,8 +219,8 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(txtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -257,9 +259,10 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPatrimonio)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtFrtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JSpinnerQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2)))
@@ -458,8 +461,6 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                dtm.removeRow(0);
            }
            
-           System.out.println(equips);
-           
            for (Equipamento equipam : equips) {
                dtm.addRow(new String[] {equipam.getNome(),equipam.getPatrimonio(),FormatosDeData.formatarLongParaDatas(equipam.getValidade()),
                equipam.getCodigo(),equipam.getTipo(),equipam.getSituacao(),String.valueOf(equipam.getValor())});
@@ -481,8 +482,11 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
         ArrayList<Equipamento> equipamento = null;
         
-        equipamento = equipamentoConexao.consultar(new Equipamento(txtPatrimonio.getText(), txtNome.getText(), FormatosDeData.formatarDatasParaLong(txtValidade.getText())
-                , txtSituacao.getText(), txtCodigo.getText(), txtTipo.getText(), FormatandoDouble.FormatandoValores(txtFrtValor.getText())), (Integer) JSpinnerQtd.getValue());
+        equipamento = equipamentoConexao.consultar(new Equipamento(txtPatrimonio.getText(), txtNome.getText()
+                , FormatosDeData.formatarDatasParaLong(txtValidade.getText())
+                , String.valueOf(txtSituacao.getText()), txtCodigo.getText(), txtTipo.getText()
+                , FormatandoDouble.FormatandoValores(txtFrtValor.getText())), (Integer) JSpinnerQtd.getValue());
+        
         
         if (equipamento.size() < (Integer) JSpinnerQtd.getValue()) {
             JOptionPane.showMessageDialog(null, "Adicionado somente "+equipamento.size()+ " devido ao limite de estoque","Estoque Insuficiente",JOptionPane.ERROR_MESSAGE);
@@ -496,7 +500,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                dtm.addRow(new String[] {equipam.getNome(),equipam.getPatrimonio(),FormatosDeData.formatarLongParaDatas(equipam.getValidade())
                ,equipam.getCodigo(),equipam.getTipo(),equipam.getSituacao(),String.valueOf(equipam.getValor())});
            }
-        
+        limparEquipamentos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -515,20 +519,21 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         Integer i = 0;
         
         while (jTable2.getRowCount() - i > 0) {  
-            System.out.println(jTable2.getRowCount());
             equipamentos2.add(new Equipamento((String) jTable2.getValueAt(0, 1)
                     , (String) jTable2.getValueAt(0, 0)
                     , FormatosDeData.formatarDatasParaLong((String) jTable2.getValueAt(i, 2))
                     , (String) jTable2.getValueAt(0, 5)
                     , (String) jTable2.getValueAt(0, 3)
                     , (String) jTable2.getValueAt(0, 4)
-                    , FormatandoDouble.FormatandoValores((String) jTable2.getValueAt(i, 6))));
+                    , Double.valueOf((String) jTable2.getValueAt(i, 6))));
             dtm.removeRow(0);
         }
         saidaConexao.cadastro(equipamentos2, txtSolicitante.getText(), txtResponsavel.getText());
         for (Equipamento equipamento : equipamentos2) {
             equipamentoConexao.deletar(equipamento.getPatrimonio());
         }
+        limparEquipamentos();
+        limparNotas();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTConsultaMouseClicked
@@ -537,7 +542,6 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTConsultaMouseClicked
     private void limparEAtualizar(ArrayList<Equipamento> equipamentos){
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-
            while (dtm.getRowCount() > 0) {            
                dtm.removeRow(0);
            }
@@ -548,8 +552,6 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
        }
     
     private void carregarSaidas(){
-        Connection conn = Connections.getConnection();
-        String sql = "select * from saida";
         ArrayList<Saida> saidas = saidaConexao.buscarTodos();
         
         DefaultTableModel dtm = (DefaultTableModel) jTable3.getModel();
@@ -559,7 +561,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         }
         
         if(saidas.isEmpty()){
-            return;
+            dtm.addRow(new String[] {"","","","","","","","",""});
         }else{
             for (Saida saida : saidas) {
                 dtm.addRow(new String[] {
@@ -570,6 +572,15 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
             }
         }
         
+    }
+    
+    private void limparEquipamentos(){
+        txtCodigo.setText("");txtFrtValor.setText("");txtNome.setText("");txtPatrimonio.setText("");
+        txtSituacao.setText("");txtTipo.setText("");txtValidade.setText("");JSpinnerQtd.setValue(1);
+    }
+    
+    private void limparNotas(){
+        txtResponsavel.setText("");txtSolicitante.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

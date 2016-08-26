@@ -24,7 +24,7 @@ public class equipamentoConexao {
     
     public static ArrayList<Equipamento> consultar(Equipamento equipamentos, Integer quantidade){
         Connection conn = Connections.getConnection();
-        String sql = "select * from equipamentos where nome like ? OR codigo like ?";
+        String sql = "select * from equipamentos where nome like ? AND codigo like ?";
         Integer i = 1;
         
         ArrayList<Equipamento> equips = new ArrayList<>();
@@ -232,7 +232,7 @@ public class equipamentoConexao {
             
             prepare.close();
             conn.close();
-            
+            System.out.println(equipamentos);
             return  equipamentos;
         } catch (SQLException ex) {
             try {
