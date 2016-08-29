@@ -178,7 +178,15 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
             new String [] {
                 "Nome", "Patrimonio", "Validade", "Código", "Tipo", "Situação", "Valor"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setForeground(new java.awt.Color(0, 153, 204));
@@ -287,8 +295,8 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         while (dtm.getRowCount() > 0) {
             int i = 0;
-            equipamentos.add(new Equipamento((String) jTable1.getValueAt(i, 0),
-                    (String) jTable1.getValueAt(i, 1),
+            equipamentos.add(new Equipamento((String) jTable1.getValueAt(i, 1),
+                    (String) jTable1.getValueAt(i, 0),
                     FormatosDeData.formatarDatasParaLong((String) jTable1.getValueAt(i, 2)),
                     (String) jTable1.getValueAt(i, 3),
                     (String) jTable1.getValueAt(i, 4),

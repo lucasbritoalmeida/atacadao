@@ -22,11 +22,11 @@ import java.util.logging.Logger;
  */
 public class registroConexao {
 
-public static void Cadastrar(String nota, String fornecedor, Double custos,ArrayList<Equipamento> equipamentos){
+public static void Cadastrar(String nota, String fornecedor, Double custos,String dtcompra,ArrayList<Equipamento> equipamentos){
     Connection conn = Connections.getConnection();
     
-    String sql = "insert into registro (nota,fornecedor,custo,nomeequipamento,validade,codigoequip,tipoequip,situequip,valorequip)"
-            + "values(?,?,?,?,?,?,?,?,?);";
+    String sql = "insert into registro (nota,fornecedor,custo,nomeequipamento,validade,codigoequip,tipoequip,situequip,valorequip,dtcompra)"
+            + "values(?,?,?,?,?,?,?,?,?,?);";
     
     PreparedStatement prepare = null;
     
@@ -43,6 +43,7 @@ public static void Cadastrar(String nota, String fornecedor, Double custos,Array
         prepare.setString(7, equipamento.getTipo());
         prepare.setString(8, equipamento.getSituacao());
         prepare.setDouble(9, Double.valueOf(equipamento.getValor()));
+        prepare.setString(10, dtcompra);
         
         prepare.execute();
     } catch (SQLException ex) {

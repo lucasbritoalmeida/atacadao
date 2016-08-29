@@ -95,6 +95,35 @@ public class equipamentoConexao {
         }
     }
     
+    public static void CadastrarComPatrimonio(Equipamento equipamento){
+        Connection conn = Connections.getConnection();    
+        String sql = "insert into equipamentos (nome,validade,situacao,codigo,tipo,valor,patrimonio) values(?,?,?,?,?,?,?);";
+        PreparedStatement prepare = null;
+        try {
+             prepare = conn.prepareStatement(sql);
+             prepare.setString(1, equipamento.getNome());
+             prepare.setLong(2, equipamento.getValidade());
+             prepare.setString(3, equipamento.getSituacao());
+             prepare.setString(4, equipamento.getCodigo());
+             prepare.setString(5, equipamento.getTipo());
+             prepare.setDouble(6, equipamento.getValor());
+             prepare.setInt(7, Integer.valueOf(equipamento.getPatrimonio()));
+             prepare.execute();
+             
+             prepare.close();
+             conn.close();
+             
+        } catch (SQLException ex) {
+            try {
+                conn.close();
+            } catch (SQLException ex1) {
+                System.out.println("erro de conexão");
+            }
+            System.out.println("erro de conexão");
+        }
+    }
+    
+    
     public static void atualizar(Equipamento equipamento) {
             Connection conn = Connections.getConnection();
             String sql = "update equipamentos set nome=?, validade=?, situacao=?, codigo=?, tipo=?, valor=? where patrimonio=?;";
@@ -232,7 +261,6 @@ public class equipamentoConexao {
             
             prepare.close();
             conn.close();
-            System.out.println(equipamentos);
             return  equipamentos;
         } catch (SQLException ex) {
             try {

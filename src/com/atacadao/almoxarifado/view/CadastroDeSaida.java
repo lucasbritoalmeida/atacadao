@@ -40,7 +40,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jTable3.setRowSorter(new TableRowSorter(modelo3));
         
         limparEAtualizar(equipamentoConexao.buscarTodos());
-        carregarSaidas();
+        carregarSaidas(saidaConexao.buscarTodos());
     }
 
     /**
@@ -93,6 +93,8 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jtxtRegistro = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -208,11 +210,11 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                         .addGap(8, 8, 8)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(JSpinnerQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(JSpinnerQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel12)))
@@ -232,7 +234,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,7 +351,15 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
             new String [] {
                 "Nome", "Patrimonio", "Validade", "Código", "Tipo", "Situação", "Valor"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -388,7 +398,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jNomeConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -401,9 +411,17 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Registro", "Solicitante", "Autorizado", "Patrimonio", "Nome", "Validade", "Situação", "Codigo", "Tipo", "Valor"
+                "Registro", "Solicitante", "Autorizado", "Patrimonio", "Nome", "Validade", "Situação", "Codigo", "Tipo", "Valor", "Data de Saida"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(jTable3);
 
         jButton4.setForeground(new java.awt.Color(0, 153, 204));
@@ -414,11 +432,25 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel13.setText("Numero de registro");
+
+        jtxtRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtRegistroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jtxtRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -427,7 +459,11 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jtxtRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
@@ -510,7 +546,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
        saidaConexao.Deletar((String) jTable3.getValueAt(jTable3.getSelectedRow(), 0));
-       carregarSaidas();
+       carregarSaidas(saidaConexao.buscarTodos());
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -528,7 +564,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                     , Double.valueOf((String) jTable2.getValueAt(i, 6))));
             dtm.removeRow(0);
         }
-        saidaConexao.cadastro(equipamentos2, txtSolicitante.getText(), txtResponsavel.getText());
+        saidaConexao.cadastro(equipamentos2, txtSolicitante.getText(), txtResponsavel.getText(),FormatosDeData.formatarLongParaDatas(jDateChooser1.getDate().getTime()));
         for (Equipamento equipamento : equipamentos2) {
             equipamentoConexao.deletar(equipamento.getPatrimonio());
         }
@@ -538,8 +574,12 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
     private void jTConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTConsultaMouseClicked
         limparEAtualizar(equipamentoConexao.buscarTodos());
-        carregarSaidas();
+        carregarSaidas(saidaConexao.buscarTodos());
     }//GEN-LAST:event_jTConsultaMouseClicked
+
+    private void jtxtRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtRegistroActionPerformed
+        carregarSaidas(saidaConexao.buscarPorRegistro(jtxtRegistro.getText()));
+    }//GEN-LAST:event_jtxtRegistroActionPerformed
     private void limparEAtualizar(ArrayList<Equipamento> equipamentos){
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
            while (dtm.getRowCount() > 0) {            
@@ -551,8 +591,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
            }
        }
     
-    private void carregarSaidas(){
-        ArrayList<Saida> saidas = saidaConexao.buscarTodos();
+    private void carregarSaidas(ArrayList<Saida> saidas){
         
         DefaultTableModel dtm = (DefaultTableModel) jTable3.getModel();
         
@@ -567,7 +606,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                 dtm.addRow(new String[] {
                     saida.getRegistro(),saida.getSolicitador(),saida.getAutorizador(),saida.getPatrimonio(),
                     saida.getNome(),FormatosDeData.formatarLongParaDatas(saida.getValidade()),saida.getSituacao(),saida.getCodigo(),
-                    saida.getTipo(),String.valueOf(saida.getValor())
+                    saida.getTipo(),String.valueOf(saida.getValor()),saida.getDatasaida()
                 });
             }
         }
@@ -595,6 +634,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -617,6 +657,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTextField jtxtRegistro;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JFormattedTextField txtFrtValor;
     private javax.swing.JTextField txtNome;

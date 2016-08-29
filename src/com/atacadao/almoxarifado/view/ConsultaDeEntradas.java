@@ -61,7 +61,15 @@ public class ConsultaDeEntradas extends javax.swing.JInternalFrame {
             new String [] {
                 "Fornecedor", "Equipamento", "Codigo", "Valor"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -71,9 +79,7 @@ public class ConsultaDeEntradas extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(0, 0, 0))
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -110,7 +116,7 @@ public class ConsultaDeEntradas extends javax.swing.JInternalFrame {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         for (equipReg registro : registros) {
             dtm.addRow(new String[] {
-                registro.getNota(), registro.getNomeequipamento(),registro.getCodigoequip(),String.valueOf(registro.getValorquip())
+                registro.getFornecedor(), registro.getNomeequipamento(),registro.getCodigoequip(),String.valueOf(registro.getValorquip())
             });
         }
     }//GEN-LAST:event_txtNumeroNotaActionPerformed

@@ -21,6 +21,7 @@ public class Saida {
     private String codigo;
     private String tipo;
     private Double valor;
+    private String datasaida;
 
     public Saida(String registro, String solicitador, String autorizador, String patrimonio, String nome, Long validade, String situacao, String codigo, String tipo, Double valor) {
         this.registro = registro;
@@ -35,6 +36,21 @@ public class Saida {
         this.valor = valor;
     }
 
+    public Saida(String registro, String solicitador, String autorizador, String patrimonio, String nome, Long validade, String situacao, String codigo, String tipo, Double valor, String datasaida) {
+        this.registro = registro;
+        this.solicitador = solicitador;
+        this.autorizador = autorizador;
+        this.patrimonio = patrimonio;
+        this.nome = nome;
+        this.validade = validade;
+        this.situacao = situacao;
+        this.codigo = codigo;
+        this.tipo = tipo;
+        this.valor = valor;
+        this.datasaida = datasaida;
+    }
+    
+    
 
     public Saida() {
     }
@@ -43,6 +59,16 @@ public class Saida {
     public String toString() {
         return "Saida{" + "registro=" + registro + ", solicitador=" + solicitador + ", autorizador=" + autorizador + ", patrimonio=" + patrimonio + ", nome=" + nome + ", validade=" + validade + ", situacao=" + situacao + ", codigo=" + codigo + ", tipo=" + tipo + ", valor=" + valor + '}';
     }
+
+    public String getDatasaida() {
+        return datasaida;
+    }
+
+    public void setDatasaida(String datasaida) {
+        this.datasaida = datasaida;
+    }
+    
+    
     
     public String getPatrimonio() {
         return patrimonio;

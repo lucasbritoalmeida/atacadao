@@ -6,10 +6,12 @@
 package com.atacadao.almoxarifado.view;
 
 import com.atacadao.almoxarifado.entidade.Equipamento;
+import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -23,6 +25,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        setTitle("Sistema do Atacadão dos Pisos - Por Lucas Brito");
+        setIcon();
     }
 
     /**
@@ -36,6 +40,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         jSeparator2 = new javax.swing.JSeparator();
+        jMenu7 = new javax.swing.JMenu();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
@@ -48,12 +53,17 @@ public class Main extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
+
+        jMenu7.setText("jMenu7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,14 +141,7 @@ public class Main extends javax.swing.JFrame {
         jMenu4.add(jMenu5);
         jMenu4.add(jSeparator1);
 
-        jMenuItem5.setText("Entrada de Notas");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem5);
-        jMenu4.add(jSeparator3);
+        jMenu6.setText("Entradas");
 
         jMenuItem8.setText("Consulta de Entradas");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +149,20 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem8);
+        jMenu6.add(jMenuItem8);
+
+        jMenuItem5.setText("Entrada de Notas");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem5);
+
+        jMenu4.add(jMenu6);
+        jMenu4.add(jSeparator3);
+
+        jMenu8.setText("Saidas");
 
         jMenuItem7.setText("Saida de Notas");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +170,17 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem7ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem7);
+        jMenu8.add(jMenuItem7);
+
+        jMenuItem9.setText("Devolução");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem9);
+
+        jMenu4.add(jMenu8);
 
         jMenuBar1.add(jMenu4);
 
@@ -251,6 +277,17 @@ public class Main extends javax.swing.JFrame {
        cde.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        DevolucaoDeSaidas dvs = new DevolucaoDeSaidas();
+        jDesktopPane1.add(dvs);
+        dvs.setVisible(true);
+        try {
+            dvs.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -294,6 +331,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -303,8 +343,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("stocks-3.png")));
+    }
 }

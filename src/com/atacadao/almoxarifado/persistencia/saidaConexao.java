@@ -48,11 +48,11 @@ public class saidaConexao {
         }
     }
     
-    public static void cadastro(ArrayList<Equipamento> equipamentos,String solicitado, String autorizado){
+    public static void cadastro(ArrayList<Equipamento> equipamentos,String solicitado, String autorizado,String datas){
         Connection conn = Connections.getConnection();
         String sql = "insert into saida (nome,validade,situacao,codigo,tipo,valor,patrimonio,"
-                + "numerosaida,solicitante,autorizado)"
-                + "values(?,?,?,?,?,?,?,?,?,?);";
+                + "numerosaida,solicitante,autorizado,datasaida)"
+                + "values(?,?,?,?,?,?,?,?,?,?,?);";
         Calendar cld = Calendar.getInstance();
         Random random = new Random(cld.getTimeInMillis());
         int numerosaida = random.nextInt();
@@ -74,6 +74,7 @@ public class saidaConexao {
                 prepare.setString(8, Integer.toUnsignedString(numerosaida));
                 prepare.setString(9, solicitado);
                 prepare.setString(10,autorizado);
+                prepare.setString(11, datas);
                 
                 prepare.execute();
                 
@@ -145,7 +146,7 @@ public class saidaConexao {
             while (result.next()) {                
                 saidas.add(new Saida(result.getString("numerosaida"),result.getString("solicitante"),result.getString("autorizado")
                 ,result.getString("patrimonio"),result.getString("nome"),FormatosDeData.formatarDatasParaLong((result.getString("validade"))),result.getString("situacao"),
-                result.getString("codigo"),result.getString("tipo"),result.getDouble("valor")));
+                result.getString("codigo"),result.getString("tipo"),result.getDouble("valor"),result.getString("datasaida")));
             }
             
             if (!conn.isClosed()) {
@@ -156,6 +157,43 @@ public class saidaConexao {
                     }else{
                         return saidas;
                     }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(saidaConexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public static ArrayList<Saida> buscarPorRegistro(String registro){
+        
+        Connection conn = Connections.getConnection();
+        String sql = "select * from saida where numerosaida like ?";
+        ArrayList<Saida> saidas = new ArrayList<>();
+        
+        PreparedStatement prepare = null;
+        
+        try {
+            prepare = conn.prepareStatement(sql);
+            prepare.setString(1, '%'+registro+'%');
+            
+            ResultSet result = prepare.executeQuery();
+            
+            while (result.next()) {                
+               saidas.add(new Saida(result.getString("numerosaida"),result.getString("solicitante"),result.getString("autorizado")
+                ,result.getString("patrimonio"),result.getString("nome"),FormatosDeData.formatarDatasParaLong((result.getString("validade"))),result.getString("situacao"),
+                result.getString("codigo"),result.getString("tipo"),result.getDouble("valor"),result.getString("datasaida")));
+            }
+            
+            if (!conn.isClosed()) {
+                conn.close();
+                prepare.close();
+            }
+            
+            if (saidas.isEmpty()) {
+                return null;
+            }else{
+                return saidas;
             }
             
         } catch (SQLException ex) {

@@ -47,11 +47,11 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         txtNumeroNota = new javax.swing.JTextField();
         txtFornecedor = new javax.swing.JTextField();
         txtCusto = new javax.swing.JFormattedTextField();
-        txtFrtDtCompra = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        txtFrtDtCompra = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         txtNomeEquip = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -90,12 +90,6 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
             }
         });
 
-        try {
-            txtFrtDtCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         jLabel1.setText("Numero da Nota");
 
         jLabel2.setText("Fornecedor");
@@ -120,10 +114,13 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtFrtDtCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtFrtDtCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,10 +132,11 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNumeroNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNumeroNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtFrtDtCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -257,7 +255,15 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
             new String [] {
                 "Nome", "Validade", "Código", "Tipo", "Situação", "Valor"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setForeground(new java.awt.Color(0, 153, 204));
@@ -362,7 +368,8 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
         
         if (!equipamentos.isEmpty() & !txtNumeroNota.getText().trim().equals("")) {
             equipamentoConexao.CasdastrarVarios(equipamentos);
-            registroConexao.Cadastrar(txtNumeroNota.getText(),txtFornecedor.getText(),FormatandoDouble.FormatandoValores(txtCusto.getText()), equipamentos);
+            registroConexao.Cadastrar(txtNumeroNota.getText(),txtFornecedor.getText(),FormatandoDouble.FormatandoValores(txtCusto.getText()),
+                    FormatosDeData.formatarLongParaDatas(txtFrtDtCompra.getDate().getTime()),equipamentos);
         }else if( txtNumeroNota.getText().trim().equals("")){
             JOptionPane.showMessageDialog(null, "Favor informar numero de nota");
         }else if(equipamentos.isEmpty()){
@@ -405,7 +412,7 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JFormattedTextField txtCusto;
     private javax.swing.JTextField txtFornecedor;
-    private javax.swing.JFormattedTextField txtFrtDtCompra;
+    private com.toedter.calendar.JDateChooser txtFrtDtCompra;
     private javax.swing.JFormattedTextField txtFrtValidade;
     private javax.swing.JFormattedTextField txtFrtValor;
     private javax.swing.JTextField txtNomeEquip;

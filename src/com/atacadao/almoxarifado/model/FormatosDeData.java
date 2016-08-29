@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.PrintService;
 
 /**
  *
@@ -36,10 +37,5 @@ public class FormatosDeData {
         clc.set(Integer.valueOf(dataCortada[2]), Integer.valueOf(dataCortada[1]), Integer.valueOf(dataCortada[0]));
         return clc.getTimeInMillis();
 
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(formatarLongParaDatas(formatarDatasParaLong("23/08/2016")));
-        
     }
 }
