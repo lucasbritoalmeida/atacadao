@@ -298,9 +298,9 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
             equipamentos.add(new Equipamento((String) jTable1.getValueAt(i, 1),
                     (String) jTable1.getValueAt(i, 0),
                     FormatosDeData.formatarDatasParaLong((String) jTable1.getValueAt(i, 2)),
+                    (String) jTable1.getValueAt(i, 5),
                     (String) jTable1.getValueAt(i, 3),
                     (String) jTable1.getValueAt(i, 4),
-                    (String) jTable1.getValueAt(i, 5),
                     Double.valueOf((String) jTable1.getValueAt(i, 6))));
                     
                     dtm.removeRow(0);
@@ -311,7 +311,6 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Favor informar valores para cadastrar os equipamentos");
         }else{
             equipamentoConexao.CasdastrarVarios(equipamentos);
-
         }
         
         

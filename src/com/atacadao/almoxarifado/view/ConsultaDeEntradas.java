@@ -7,6 +7,7 @@ package com.atacadao.almoxarifado.view;
 
 import com.atacadao.almoxarifado.entidade.equipReg;
 import com.atacadao.almoxarifado.persistencia.registroConexao;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,9 +40,6 @@ public class ConsultaDeEntradas extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
 
         setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Consulta de Entradas");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -129,4 +127,5 @@ public class ConsultaDeEntradas extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtNumeroNota;
     // End of variables declaration//GEN-END:variables
+
 }

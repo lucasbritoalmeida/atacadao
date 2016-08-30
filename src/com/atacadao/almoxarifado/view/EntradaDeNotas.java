@@ -357,9 +357,9 @@ public class EntradaDeNotas extends javax.swing.JInternalFrame {
             int i = 0;
             equipamentos.add(new Equipamento((String) jTable1.getValueAt(i, 0),
                     FormatosDeData.formatarDatasParaLong((String) jTable1.getValueAt(i, 1)),
+                    (String) jTable1.getValueAt(i, 4),
                     (String) jTable1.getValueAt(i, 2),
                     (String) jTable1.getValueAt(i, 3),
-                    (String) jTable1.getValueAt(i, 4),
                     Double.valueOf((String) jTable1.getValueAt(i, 5))));
                     
                     dtm.removeRow(0);
