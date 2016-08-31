@@ -8,6 +8,7 @@ package com.atacadao.almoxarifado.view;
 import com.atacadao.almoxarifado.conectividade.Connections;
 import com.atacadao.almoxarifado.entidade.Equipamento;
 import com.atacadao.almoxarifado.entidade.Saida;
+import com.atacadao.almoxarifado.model.Codigos;
 import com.atacadao.almoxarifado.model.FormatandoDouble;
 import com.atacadao.almoxarifado.model.FormatosDeData;
 import com.atacadao.almoxarifado.persistencia.equipamentoConexao;
@@ -59,6 +60,8 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         txtSolicitante = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtResponsavel = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
@@ -75,10 +78,8 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         JSpinnerQtd = new javax.swing.JSpinner();
-        txtSituacao = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jLabel2 = new javax.swing.JLabel();
         jFrtData = new javax.swing.JFormattedTextField();
+        txtSituacao = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -119,6 +120,8 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Responsavel");
 
+        jLabel2.setText("Data de Saida");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -130,22 +133,28 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                     .addComponent(txtSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(59, 59, 59))
+                    .addComponent(jLabel4)
+                    .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSolicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -153,11 +162,17 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Nome");
 
+        txtNome.setEditable(false);
+
         jLabel6.setText("Validade");
 
         jLabel7.setText("Código");
 
+        txtCodigo.setEditable(false);
+
         jLabel8.setText("Tipo");
+
+        txtTipo.setEditable(false);
 
         jLabel9.setText("Patrimonio");
 
@@ -167,6 +182,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Valor");
 
+        txtFrtValor.setEditable(false);
         txtFrtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         jButton2.setForeground(new java.awt.Color(0, 204, 204));
@@ -181,12 +197,10 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
         JSpinnerQtd.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
-        txtSituacao.setEditable(false);
-
-        jLabel2.setText("Data de Saida");
-
         jFrtData.setEditable(false);
         jFrtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+
+        txtSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Excelente", "Boa", "Regular", "Ruim", "Em manutenção" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -201,23 +215,19 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                             .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel10)
+                            .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtFrtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11))
-                        .addGap(8, 8, 8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(JSpinnerQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel12)))
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -234,7 +244,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,18 +266,14 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtFrtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(JSpinnerQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFrtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JSpinnerQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -510,7 +516,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jFrtData.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2));
         txtCodigo.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
         txtTipo.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
-        txtSituacao.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 5));
+        txtSituacao.setSelectedIndex(1);
         txtFrtValor.setText(FormatandoDouble.DoubleParaString((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6)));
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -520,7 +526,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         
         equipamento = equipamentoConexao.consultar(new Equipamento(txtPatrimonio.getText(), txtNome.getText()
                 , FormatosDeData.formatarDatasParaLong(jFrtData.getText())
-                , String.valueOf(txtSituacao.getText()), txtCodigo.getText(), txtTipo.getText()
+                , String.valueOf(txtSituacao.getSelectedItem()).toUpperCase(), txtCodigo.getText(), txtTipo.getText()
                 , FormatandoDouble.FormatandoValores(txtFrtValor.getText())), (Integer) JSpinnerQtd.getValue());
         
         
@@ -564,7 +570,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                     , Double.valueOf((String) jTable2.getValueAt(i, 6))));
             dtm.removeRow(0);
         }
-        saidaConexao.cadastro(equipamentos2, txtSolicitante.getText(), txtResponsavel.getText(),FormatosDeData.formatarLongParaDatas(jDateChooser1.getDate().getTime()));
+        saidaConexao.cadastro(equipamentos2, txtSolicitante.getText().toUpperCase(), txtResponsavel.getText().toUpperCase(),FormatosDeData.formatarLongParaDatas(jDateChooser1.getDate().getTime()));
         for (Equipamento equipamento : equipamentos2) {
             equipamentoConexao.deletar(equipamento.getPatrimonio());
         }
@@ -614,12 +620,12 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
     }
     
     private void limparEquipamentos(){
-        txtCodigo.setText("");txtFrtValor.setText("");txtNome.setText("");txtPatrimonio.setText("");
-        txtSituacao.setText("");txtTipo.setText("");jDateChooser1.setDate(new Date());JSpinnerQtd.setValue(1);
+        txtFrtValor.setText("");txtNome.setText("");txtPatrimonio.setText("");
+        txtSituacao.setSelectedIndex(0);txtTipo.setText("");JSpinnerQtd.setValue(1);
     }
     
     private void limparNotas(){
-        txtResponsavel.setText("");txtSolicitante.setText("");
+        txtResponsavel.setText("");txtSolicitante.setText("");jDateChooser1.setDate(new Date());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -663,7 +669,7 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPatrimonio;
     private javax.swing.JTextField txtResponsavel;
-    private javax.swing.JTextField txtSituacao;
+    private javax.swing.JComboBox<String> txtSituacao;
     private javax.swing.JTextField txtSolicitante;
     private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables

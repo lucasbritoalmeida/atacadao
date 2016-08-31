@@ -6,6 +6,7 @@
 package com.atacadao.almoxarifado.view;
 
 import com.atacadao.almoxarifado.entidade.Equipamento;
+import com.atacadao.almoxarifado.model.Codigos;
 import com.atacadao.almoxarifado.model.FormatandoDouble;
 import com.atacadao.almoxarifado.model.FormatosDeData;
 import com.atacadao.almoxarifado.persistencia.equipamentoConexao;
@@ -47,14 +48,14 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtTipo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtValor = new javax.swing.JFormattedTextField();
         txtSituacao = new javax.swing.JComboBox<>();
         txtFrtValidade = new com.toedter.calendar.JDateChooser();
+        txtTipo = new javax.swing.JComboBox<>();
+        txtCodigo = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -98,6 +99,10 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
 
         txtSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Excelente", "Boa", "Regular", "Ruim", "Em manutenção" }));
 
+        txtTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "COMPRA", "ALUGUEL" }));
+
+        txtCodigo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "MAN", "INF", "CX", "ESC", "LIMP", "LJ", "ALIM" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -126,18 +131,19 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(51, 51, 51)
                                 .addComponent(jLabel3)
-                                .addGap(110, 110, 110)
-                                .addComponent(jLabel5)
-                                .addGap(56, 56, 56)
+                                .addGap(199, 199, 199)
                                 .addComponent(jLabel6))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtFrtValidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(265, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,8 +158,8 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtFrtValidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -282,8 +288,8 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
         dtm.addRow(new String[] {txtNome.getText().toUpperCase()
                     ,txtPatrimonio.getText().toUpperCase()
                     ,FormatosDeData.formatarLongParaDatas(txtFrtValidade.getDate().getTime())
-                    ,txtCodigo.getText()
-                    ,txtTipo.getText()
+                    ,Codigos.valueOf(String.valueOf(txtCodigo.getSelectedItem()).trim()).getCodigo()
+                    ,String.valueOf(txtTipo.getSelectedItem())
                     ,String.valueOf(txtSituacao.getSelectedItem()).toUpperCase()
                     ,FormatandoDouble.FormatandoValoresString(txtValor.getText())}); 
         }
@@ -339,12 +345,12 @@ public class CadastrarEquipamentos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbProgressBar;
-    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JComboBox<String> txtCodigo;
     private com.toedter.calendar.JDateChooser txtFrtValidade;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPatrimonio;
     private javax.swing.JComboBox<String> txtSituacao;
-    private javax.swing.JTextField txtTipo;
+    private javax.swing.JComboBox<String> txtTipo;
     private javax.swing.JFormattedTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

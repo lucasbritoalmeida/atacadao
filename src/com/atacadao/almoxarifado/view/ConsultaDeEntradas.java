@@ -6,6 +6,7 @@
 package com.atacadao.almoxarifado.view;
 
 import com.atacadao.almoxarifado.entidade.equipReg;
+import com.atacadao.almoxarifado.model.FormatosDeData;
 import com.atacadao.almoxarifado.persistencia.registroConexao;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -57,11 +58,11 @@ public class ConsultaDeEntradas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Fornecedor", "Equipamento", "Codigo", "Valor"
+                "Fornecedor", "Equipamento", "Codigo", "Valor", "Data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -114,7 +115,9 @@ public class ConsultaDeEntradas extends javax.swing.JInternalFrame {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         for (equipReg registro : registros) {
             dtm.addRow(new String[] {
-                registro.getFornecedor(), registro.getNomeequipamento(),registro.getCodigoequip(),String.valueOf(registro.getValorquip())
+                registro.getFornecedor(), registro.getNomeequipamento()
+                ,registro.getCodigoequip(),String.valueOf(registro.getValorquip())
+                ,FormatosDeData.formatarLongParaDatas(Long.valueOf(registro.getValidade()))
             });
         }
     }//GEN-LAST:event_txtNumeroNotaActionPerformed
