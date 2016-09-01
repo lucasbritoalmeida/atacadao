@@ -3,13 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/model/Codigos.java</file>
-            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/view/EntradaDeNotas.java</file>
-            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/view/ConsultaDeEntradas.java</file>
-            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/view/CadastrarEquipamentos.java</file>
-            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/persistencia/registroConexao.java</file>
-            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/view/Main.java</file>
+            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/entidade/Saida.java</file>
+            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/test/testes.java</file>
+            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/model/XMLsaidas.java</file>
+            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/conectividade/Connections.java</file>
             <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/view/CadastroDeSaida.java</file>
+            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/model/GerandoPDF.java</file>
+            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/view/JFlogin.java</file>
         </group>
     </open-files>
 </project-private>

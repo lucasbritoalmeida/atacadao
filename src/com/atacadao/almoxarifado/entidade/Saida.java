@@ -5,10 +5,14 @@
  */
 package com.atacadao.almoxarifado.entidade;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author lucas
  */
+@XmlRootElement(name = "saida")
 public class Saida {
     
     private String registro;
@@ -60,6 +64,7 @@ public class Saida {
         return "Saida{" + "registro=" + registro + ", solicitador=" + solicitador + ", autorizador=" + autorizador + ", patrimonio=" + patrimonio + ", nome=" + nome + ", validade=" + validade + ", situacao=" + situacao + ", codigo=" + codigo + ", tipo=" + tipo + ", valor=" + valor + '}';
     }
 
+    @XmlElement(name="dataSaida")
     public String getDatasaida() {
         return datasaida;
     }
@@ -69,7 +74,7 @@ public class Saida {
     }
     
     
-    
+    @XmlElement(name="patrimonio")
     public String getPatrimonio() {
         return patrimonio;
     }
@@ -78,6 +83,7 @@ public class Saida {
         this.patrimonio = patrimonio;
     }
 
+    @XmlElement(name="nome")
     public String getNome() {
         return nome;
     }
@@ -86,6 +92,7 @@ public class Saida {
         this.nome = nome;
     }
 
+    @XmlElement(name="validade")
     public Long getValidade() {
         return validade;
     }
@@ -94,6 +101,7 @@ public class Saida {
         this.validade = validade;
     }
 
+    @XmlElement(name="situacao")
     public String getSituacao() {
         return situacao;
     }
@@ -102,6 +110,7 @@ public class Saida {
         this.situacao = situacao;
     }
 
+    @XmlElement(name="codigo")
     public String getCodigo() {
         return codigo;
     }
@@ -110,6 +119,7 @@ public class Saida {
         this.codigo = codigo;
     }
 
+    @XmlElement(name="tipo")
     public String getTipo() {
         return tipo;
     }
@@ -118,6 +128,7 @@ public class Saida {
         this.tipo = tipo;
     }
 
+    @XmlElement(name="valor")
     public Double getValor() {
         return valor;
     }
@@ -127,6 +138,7 @@ public class Saida {
     }
 
 
+    @XmlElement(name="registro")
     public String getRegistro() {
         return registro;
     }
@@ -135,6 +147,7 @@ public class Saida {
         this.registro = registro;
     }
 
+    @XmlElement(name="=solicitador")
     public String getSolicitador() {
         return solicitador;
     }
@@ -143,6 +156,7 @@ public class Saida {
         this.solicitador = solicitador;
     }
 
+    @XmlElement(name="autorizador")
     public String getAutorizador() {
         return autorizador;
     }

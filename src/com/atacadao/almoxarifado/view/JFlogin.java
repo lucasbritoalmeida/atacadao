@@ -77,8 +77,9 @@ public class JFlogin extends javax.swing.JFrame {
             }
         });
 
-        btnEntrar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnEntrar.setForeground(new java.awt.Color(0, 153, 153));
+        btnEntrar.setBackground(new java.awt.Color(28, 100, 125));
+        btnEntrar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
         btnEntrar.setText("Entrar");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
