@@ -5,8 +5,7 @@
         <group>
             <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/entidade/Saida.java</file>
             <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/test/testes.java</file>
-            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/model/XMLsaidas.java</file>
-            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/conectividade/Connections.java</file>
+            <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/persistencia/saidaConexao.java</file>
             <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/view/CadastroDeSaida.java</file>
             <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/model/GerandoPDF.java</file>
             <file>file:/C:/Users/lucas/Documents/NetBeansProjects/aplicacao/src/com/atacadao/almoxarifado/view/JFlogin.java</file>

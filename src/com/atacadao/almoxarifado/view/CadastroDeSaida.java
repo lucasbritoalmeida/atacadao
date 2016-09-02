@@ -11,6 +11,7 @@ import com.atacadao.almoxarifado.entidade.Saida;
 import com.atacadao.almoxarifado.model.Codigos;
 import com.atacadao.almoxarifado.model.FormatandoDouble;
 import com.atacadao.almoxarifado.model.FormatosDeData;
+import com.atacadao.almoxarifado.model.GerandoPDF;
 import com.atacadao.almoxarifado.persistencia.equipamentoConexao;
 import com.atacadao.almoxarifado.persistencia.saidaConexao;
 import java.io.FileInputStream;
@@ -320,11 +321,11 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -593,7 +594,11 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
                     , Double.valueOf((String) jTable2.getValueAt(i, 6))));
             dtm.removeRow(0);
         }
-        saidaConexao.cadastro(equipamentos2, txtSolicitante.getText().toUpperCase(), txtResponsavel.getText().toUpperCase(),FormatosDeData.formatarLongParaDatas(jDateChooser1.getDate().getTime()));
+        int numeroregistro = saidaConexao.cadastro(equipamentos2, txtSolicitante.getText().toUpperCase(), txtResponsavel.getText().toUpperCase(),FormatosDeData.formatarLongParaDatas(jDateChooser1.getDate().getTime()));
+        
+        GerandoPDF pdf = new GerandoPDF();
+        pdf.pdfDeSaida(equipamentos2, txtSolicitante.getText(), txtResponsavel.getText(),numeroregistro);
+        
         for (Equipamento equipamento : equipamentos2) {
             equipamentoConexao.deletar(equipamento.getPatrimonio());
         }
@@ -612,12 +617,12 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         Connection conn = Connections.getConnection();
-        String src = "relatorioDeSaida.jrxml";
+        String src = "report1.jasper";
         
         JasperPrint jasperPrint = null;
         
         try {
-            jasperPrint = JasperFillManager.fillReport(src, null, conn);
+            jasperPrint = JasperFillManager.fillReport(getClass().getResourceAsStream(src), null, conn);
             JasperViewer view = new JasperViewer(jasperPrint,false);
             view.setVisible(true);
             
@@ -626,8 +631,6 @@ public class CadastroDeSaida extends javax.swing.JInternalFrame {
         } catch (JRException ex) {
             Logger.getLogger(CadastroDeSaida.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroDeSaida.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
             Logger.getLogger(CadastroDeSaida.class.getName()).log(Level.SEVERE, null, ex);
         }
         

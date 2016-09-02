@@ -48,7 +48,7 @@ public class saidaConexao {
         }
     }
     
-    public static void cadastro(ArrayList<Equipamento> equipamentos,String solicitado, String autorizado,String datas){
+    public static int cadastro(ArrayList<Equipamento> equipamentos,String solicitado, String autorizado,String datas){
         Connection conn = Connections.getConnection();
         String sql = "insert into saida (nome,validade,situacao,codigo,tipo,valor,patrimonio,"
                 + "numerosaida,solicitante,autorizado,datasaida)"
@@ -78,6 +78,7 @@ public class saidaConexao {
                 
                 prepare.execute();
                 
+                return numerosaida;
                 
             } catch (SQLException ex) {
                 Logger.getLogger(saidaConexao.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,6 +93,7 @@ public class saidaConexao {
         } catch (SQLException ex) {
             Logger.getLogger(saidaConexao.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return numerosaida;
     }
     
     public static ArrayList<Equipamento> buscarPorPatrimonio(String numeroSaida){
