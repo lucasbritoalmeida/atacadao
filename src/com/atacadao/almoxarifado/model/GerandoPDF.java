@@ -8,6 +8,7 @@ package com.atacadao.almoxarifado.model;
 import com.atacadao.almoxarifado.entidade.Equipamento;
 import com.atacadao.almoxarifado.entidade.Saida;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -15,12 +16,18 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.TabStop;
+import com.itextpdf.text.Utilities;
+import com.itextpdf.text.pdf.Barcode128;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfBody;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfFormField;
+import com.itextpdf.text.pdf.PdfNumber;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPage;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.PdfCell;
 import com.lowagie.text.pdf.PdfImage;
@@ -33,36 +40,52 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import org.apache.lucene.store.Directory;
 
 /**
  *
  * @author lucas
  */
 public class GerandoPDF {
-    public void pdfDeSaida(ArrayList<Equipamento> equipamentos, String solicitante, String autorizante,int numeroSaida){
+    public void pdfDeSaida(ArrayList<Equipamento> equipamentos, String solicitante, String autorizante, String responsavel,String numeroSaida){
         Document documento = new Document();
         
         try {
+            
+            Path path = Paths.get("\\files\\saidas.pdf");
+            
+            if (!Files.isDirectory(path.getParent())) {
+                Files.createDirectory(path.getParent());
+                Files.createFile(path);
+            }
+
+            
             PdfWriter pdf;
-            pdf = PdfWriter.getInstance(documento, new FileOutputStream("saidas.pdf"));
+            pdf = PdfWriter.getInstance(documento, new FileOutputStream("\\files\\saidas.pdf"));
 
             documento.open();
-            documento.addTitle("SOLICITAÇÃO DE EQUIPAMENTOS");
+            documento.addTitle("SOLICITAÇÃO DE EQUIPAMENTOS E PRODUTOS");
             
             /**
              * Responsavel pelo cabeçalho do documento
              */
-//            Image imagem = Image.getInstance(getClass().getResource("atacadao.jpg"));
-//            imagem.setAlignment(Element.ALIGN_CENTER);
-//            documento.add(imagem);
+            Image imagem = Image.getInstance("atacadao.jpg");   
+            imagem.setAlignment(Element.ALIGN_CENTER);
+            documento.add(imagem);
             
-            Paragraph titulo = new Paragraph("SOLICITAÇÃO DE EQUIPAMENTOS"
+            Paragraph titulo = new Paragraph("SOLICITAÇÃO DE EQUIPAMENTOS E PRODUTOS"
                     ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 16, 0, BaseColor.BLACK));
            
             titulo.setAlignment(Element.ALIGN_CENTER);
@@ -76,7 +99,7 @@ public class GerandoPDF {
             
             Paragraph espaco = new Paragraph("\n\nDeclaro para os devidos fins que eu " + solicitante
                 +" recebi na " +sdf.format(datas) + " os equipamentos abaixo relacionados da empresa "
-                    + "Atacadão dos Pisos por " + autorizante+".\n"
+                    + "Atacadão dos Pisos por " + autorizante+" e autorizado por "+ responsavel+".\n"
                     ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 12, 0, BaseColor.BLACK));
             
             documento.add(espaco);
@@ -178,8 +201,10 @@ public class GerandoPDF {
             documento.add(new Paragraph("\n\n\n"));
             documento.add(pdfTs);
             
-            documento.close();
-            Desktop.getDesktop().open(new File("saidas.pdf"));
+            documento.close();            
+            ImpressaoDeDocumentos imprimir = new ImpressaoDeDocumentos("\\files\\saidas.pdf");
+            
+//            Desktop.getDesktop().open(new File("\\files\\saidas.pdf"));
             
         } catch (DocumentException ex) {
             Logger.getLogger(GerandoPDF.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,60 +214,110 @@ public class GerandoPDF {
             Logger.getLogger(GerandoPDF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void pdfRelatorioSaida(ArrayList<Saida> saidas){
+        Document documento = new Document(PageSize.A4.rotate());
 
-    public void pdfRelatorio(ArrayList<Saida> saidas){
-        Document documento = new Document(PageSize.A4,0,0,0,0);
         try {
-            PdfWriter pdfs = PdfWriter.getInstance(documento, new FileOutputStream("relatoriosaida.pdf"));
+            PdfWriter pdf = PdfWriter.getInstance(documento, new FileOutputStream("relatorios.pdf"));
+
+            Paragraph titulo = new Paragraph("Relatório de Saída\n\n", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 20, Font.BOLD));
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            
             documento.open();
+            documento.add(titulo);
             
-            PdfPTable table = new PdfPTable(2);
-            Image imagem = Image.getInstance("atacadao.jpg");
+            PdfPTable table = new PdfPTable(8);
+            PdfPCell cSaida = new PdfPCell(new Phrase("N° Saída"));
+            cSaida.setBackgroundColor(BaseColor.DARK_GRAY);
+            PdfPCell cNome = new PdfPCell(new Phrase("Nome"));
+            cNome.setBackgroundColor(BaseColor.DARK_GRAY);
+            PdfPCell cPatrimonio = new PdfPCell(new Phrase("Patrimonio"));
+            cPatrimonio.setBackgroundColor(BaseColor.DARK_GRAY);
+            PdfPCell cValor = new PdfPCell(new Phrase("Valor"));
+            cValor.setBackgroundColor(BaseColor.DARK_GRAY);
+            PdfPCell cSolic = new PdfPCell(new Phrase("Solicitante"));
+            cSolic.setBackgroundColor(BaseColor.DARK_GRAY);
+            PdfPCell cAtut = new PdfPCell(new Phrase("Autorizado"));
+            cAtut.setBackgroundColor(BaseColor.DARK_GRAY);
+            PdfPCell cCodigo = new PdfPCell(new Phrase("Codigo"));
+            cCodigo.setBackgroundColor(BaseColor.DARK_GRAY);
+            PdfPCell cDtSaida = new PdfPCell(new Phrase("Dt Saída"));
+            cDtSaida.setBackgroundColor(BaseColor.DARK_GRAY);
             
-            PdfPCell logo = new PdfPCell(imagem);
-            logo.setBorder(0);
+            table.addCell(cSaida);
+            table.addCell(cNome);
+            table.addCell(cPatrimonio);
+            table.addCell(cValor);
+            table.addCell(cSolic);
+            table.addCell(cAtut);
+            table.addCell(cCodigo);
+            table.addCell(cDtSaida);
             
-            PdfPCell titulos = new PdfPCell(new Paragraph("Relatórios de Saidas"
-                    , new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 22, Font.BOLD, BaseColor.BLACK)));
-            titulos.setBorder(0);
-            titulos.setPadding(0);
             
-            
-            table.addCell(logo);
-            table.addCell(titulos);
+            for (Saida saida : saidas) {
+              PdfPCell sai = new PdfPCell(new Phrase(saida.getRegistro()));
+              PdfPCell nomes = new PdfPCell(new Phrase(saida.getNome()));
+              PdfPCell patrimonios = new PdfPCell(new Phrase(saida.getPatrimonio()));
+              PdfPCell valores = new PdfPCell(new Phrase(String.valueOf(saida.getValor())));
+              PdfPCell solicitantes = new PdfPCell(new Phrase(saida.getSolicitador()));
+              PdfPCell autorizados = new PdfPCell(new Phrase(saida.getAutorizador()));
+              PdfPCell codigos = new PdfPCell(new Phrase(saida.getCodigo()));
+              PdfPCell datas = new PdfPCell(new Phrase(FormatosDeData.formatarLongParaDatas(saida.getDatasaida().getTime())));
+              
+              table.addCell(sai);table.addCell(nomes);table.addCell(patrimonios);table.addCell(valores);
+              table.addCell(solicitantes);table.addCell(autorizados);table.addCell(codigos);table.addCell(datas);
+            }
             
             documento.add(table);
-            
-            /* IMPLEMENTAR RELATÓRIO AQUI*/
-            
-            PdfPTable relatorio = new PdfPTable(7);
-            relatorio.addCell(new PdfPCell(new Paragraph("Registro"
-                    ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 12, 0, BaseColor.WHITE)))).setBackgroundColor(BaseColor.DARK_GRAY);
-            relatorio.addCell(new PdfPCell(new Paragraph("Patrimomio"
-                    ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 12, 0, BaseColor.WHITE)))).setBackgroundColor(BaseColor.DARK_GRAY);
-            relatorio.addCell(new PdfPCell(new Paragraph("Equipamento"
-                    ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 12, 0, BaseColor.WHITE)))).setBackgroundColor(BaseColor.DARK_GRAY);
-            relatorio.addCell(new PdfPCell(new Paragraph("Custo"
-                    ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 12, 0, BaseColor.WHITE)))).setBackgroundColor(BaseColor.DARK_GRAY);
-            relatorio.addCell(new PdfPCell(new Paragraph("Solicitado"
-                    ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 12, 0, BaseColor.WHITE)))).setBackgroundColor(BaseColor.DARK_GRAY);
-            relatorio.addCell(new PdfPCell(new Paragraph("Autorizado"
-                    ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 12, 0, BaseColor.WHITE)))).setBackgroundColor(BaseColor.DARK_GRAY);
-            relatorio.addCell(new PdfPCell(new Paragraph("Data de Saída"
-                    ,new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.UNDEFINED, 12, 0, BaseColor.WHITE)))).setBackgroundColor(BaseColor.DARK_GRAY);
-            
-            documento.add(relatorio);
-            
             documento.close();
-            Desktop.getDesktop().open(new File("relatoriosaida.pdf"));
-            
-        } catch (DocumentException ex) {
-            Logger.getLogger(GerandoPDF.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
+            Desktop.getDesktop().open(new File("relatorios.pdf"));
+        } catch (DocumentException | FileNotFoundException ex) {
             Logger.getLogger(GerandoPDF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(GerandoPDF.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+            
+    }    
+    
+    public void pdfImpressaoBarraDeCodigo(String codigo){
+         Document documento =  new Document(new Rectangle(90, 65));
+         documento.setMargins(0, 0, 0, 0);
+         
+        PdfWriter pdf;
+            
+        try {
+            pdf = PdfWriter.getInstance(documento, new FileOutputStream("codigodebarras.pdf"));
+             documento.open();
+            PdfContentByte contB = pdf.getDirectContent();
+            Barcode128 barCode = new Barcode128();
+            barCode.setCode(codigo);
+            barCode.setCodeType(Barcode128.CODE128);
+            
+            Image image = barCode.createImageWithBarcode(contB, BaseColor.BLACK, BaseColor.BLACK);
+            Paragraph titulo = new Paragraph("ATCADÃO DOS PISOS\n", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 5));
+            titulo.setPaddingTop(0);
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            
+            float scaler = ((documento.getPageSize().getWidth() - documento.leftMargin()
+               - documento.rightMargin() - 0) / image.getWidth()) * 60;
 
+            image.scalePercent(scaler);
+            image.setPaddingTop(0);
+            image.setAlignment(Element.ALIGN_CENTER);
+            
+            documento.add(titulo);
+            documento.add(image);
+            
+            documento.close();
+            
+            Desktop.getDesktop().open(new File("codigodebarras.pdf"));
+            
+        } catch (DocumentException | FileNotFoundException ex) {
+            Logger.getLogger(GerandoPDF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GerandoPDF.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+    }
 }

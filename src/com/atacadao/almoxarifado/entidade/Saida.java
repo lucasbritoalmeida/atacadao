@@ -5,6 +5,9 @@
  */
 package com.atacadao.almoxarifado.entidade;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -20,14 +23,14 @@ public class Saida {
     private String autorizador;
     private String patrimonio;
     private String nome;
-    private Long validade;
+    private Date validade;
     private String situacao;
     private String codigo;
     private String tipo;
     private Double valor;
-    private String datasaida;
+    private Date datasaida;
 
-    public Saida(String registro, String solicitador, String autorizador, String patrimonio, String nome, Long validade, String situacao, String codigo, String tipo, Double valor) {
+    public Saida(String registro, String solicitador, String autorizador, String patrimonio, String nome, Date validade, String situacao, String codigo, String tipo, Double valor) {
         this.registro = registro;
         this.solicitador = solicitador;
         this.autorizador = autorizador;
@@ -40,7 +43,7 @@ public class Saida {
         this.valor = valor;
     }
 
-    public Saida(String registro, String solicitador, String autorizador, String patrimonio, String nome, Long validade, String situacao, String codigo, String tipo, Double valor, String datasaida) {
+    public Saida(String registro, String solicitador, String autorizador, String patrimonio, String nome, Date validade, String situacao, String codigo, String tipo, Double valor, Date datasaida) {
         this.registro = registro;
         this.solicitador = solicitador;
         this.autorizador = autorizador;
@@ -61,15 +64,17 @@ public class Saida {
 
     @Override
     public String toString() {
-        return "Saida{" + "registro=" + registro + ", solicitador=" + solicitador + ", autorizador=" + autorizador + ", patrimonio=" + patrimonio + ", nome=" + nome + ", validade=" + validade + ", situacao=" + situacao + ", codigo=" + codigo + ", tipo=" + tipo + ", valor=" + valor + '}';
-    }
+        Locale local = new Locale("pt", "BR");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", local);
+        return "Saida{" + "registro=" + registro + ", solicitador=" + solicitador + ", autorizador=" + autorizador + ", patrimonio=" + patrimonio + ", nome=" + nome + ", validade=" + validade + ", situacao=" + situacao + ", codigo=" + codigo + ", tipo=" + tipo + ", valor=" + valor + ", datasaida=" + sdf.format(datasaida) + '}';
+    }   
 
     
-    public String getDatasaida() {
+    public Date getDatasaida() {
         return datasaida;
     }
 
-    public void setDatasaida(String datasaida) {
+    public void setDatasaida(Date datasaida) {
         this.datasaida = datasaida;
     }
     
@@ -93,11 +98,11 @@ public class Saida {
     }
 
     
-    public Long getValidade() {
+    public Date getValidade() {
         return validade;
     }
 
-    public void setValidade(Long validade) {
+    public void setValidade(Date validade) {
         this.validade = validade;
     }
 

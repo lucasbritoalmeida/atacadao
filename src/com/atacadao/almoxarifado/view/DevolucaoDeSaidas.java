@@ -282,8 +282,8 @@ private void carregarSaidas(ArrayList<Saida> saidas){
             for (Saida saida : saidas) {
                 dtm.addRow(new String[] {
                     saida.getRegistro(),saida.getSolicitador(),saida.getAutorizador(),saida.getPatrimonio(),
-                    saida.getNome(),FormatosDeData.formatarLongParaDatas(saida.getValidade()),saida.getSituacao(),saida.getCodigo(),
-                    saida.getTipo(),String.valueOf(saida.getValor()),saida.getDatasaida()
+                    saida.getNome(),FormatosDeData.formatarLongParaDatas(saida.getValidade().getTime()),saida.getSituacao(),saida.getCodigo(),
+                    saida.getTipo(),String.valueOf(saida.getValor()),FormatosDeData.formatarLongParaDatas(saida.getDatasaida().getTime())
                 });
             }
         }
