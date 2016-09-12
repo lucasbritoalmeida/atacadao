@@ -8,7 +8,6 @@ package com.atacadao.almoxarifado.persistencia;
 import com.atacadao.almoxarifado.conectividade.Connections;
 import com.atacadao.almoxarifado.entidade.Equipamento;
 import com.atacadao.almoxarifado.entidade.Saida;
-import com.atacadao.almoxarifado.model.FormatosDeData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -217,13 +216,14 @@ public class saidaConexao {
         String sql = "select * " +
                     "from saida " +
                     "where nome like ? " +
-                    "OR  codigo like ? " +
-                    "OR tipo like ? " +
-                    "OR numerosaida like ? " +
-                    "OR solicitante like ? " +
-                    "OR autorizado like ? " +
-                    "OR patrimonio like ? " +
-                    "AND datadesaida BETWEEN ? AND ?";
+                    "AND  codigo like ? " +
+                    "AND tipo like ? " +
+                    "AND numerosaida like ? " +
+                    "AND solicitante like ? " +
+                    "AND autorizado like ? " +
+                    "AND patrimonio like ? " +
+                    "AND datadesaida BETWEEN ? AND ? "
+                    + "GROUP BY numerosaida";
         
         
             PreparedStatement prepare;
